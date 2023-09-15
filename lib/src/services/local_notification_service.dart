@@ -15,6 +15,7 @@ abstract class LocalNotificationService {
     String androidIcon = '@mipmap/ic_launcher',
     Priority androidPriority = Priority.defaultPriority,
     Importance androidImportance = Importance.defaultImportance,
+    AndroidNotificationDetails? androidDetails,
   }) =>
       _localNotiServiceInstance.setup(
         androidChannelId: androidChannelId,
@@ -75,7 +76,6 @@ abstract class LocalNotificationService {
 
   Future<void> cancel(int id);
 }
-
 
 final _localNotiServiceInstance = LocalNotificationServiceImpl();
 

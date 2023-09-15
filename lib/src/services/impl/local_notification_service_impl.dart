@@ -46,6 +46,7 @@ class LocalNotificationServiceImpl extends LocalNotificationService {
   late String androidIcon;
   Priority androidPriority = Priority.defaultPriority;
   Importance androidImportance = Importance.defaultImportance;
+  AndroidNotificationDetails? androidDetails;
 
   EasyNotificationModel? _lastNotiOpened;
 
@@ -212,14 +213,18 @@ class LocalNotificationServiceImpl extends LocalNotificationService {
   NotificationDetails _getPlatformChannelSpecfics(
     AndroidNotificationDetails? androidDetails,
   ) {
-    final androidPlatformChannelSpecifics = androidDetails ??
-        AndroidNotificationDetails(
-          androidChannelId,
-          androidChannelName,
-          priority: androidPriority,
-          importance: androidImportance,
-          icon: androidIcon,
-        );
+    final androidPlatformChannelSpecifics = [
+      androidDetails,
+      this.androidDetails,
+      AndroidNotificationDetails(
+        androidChannelId,
+        androidChannelName,
+        priority: androidPriority,
+        importance: androidImportance,
+        icon: androidIcon,
+      )
+    ].firstWhere((e) => e != null);
+
     const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
 
     return NotificationDetails(
@@ -235,6 +240,7 @@ class LocalNotificationServiceImpl extends LocalNotificationService {
     String androidIcon = '@mipmap/ic_launcher',
     Priority androidPriority = Priority.defaultPriority,
     Importance androidImportance = Importance.defaultImportance,
+    AndroidNotificationDetails? androidDetails,
   }) async {
     this.androidChannelId = androidChannelId;
     this.androidChannelName = androidChannelName;
@@ -242,6 +248,7 @@ class LocalNotificationServiceImpl extends LocalNotificationService {
     this.androidIcon = androidIcon;
     this.androidPriority = androidPriority;
     this.androidImportance = androidImportance;
+    this.androidDetails = androidDetails;
 
     await _init();
     return this;
