@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -102,10 +101,10 @@ class LocalNotificationServiceImpl extends LocalNotificationService {
     if (payload != null) {
       if (_onNotificationOpended.hasListener) {
         _onNotificationOpended.add(
-          EasyNotificationModel.fromJson(jsonDecode(payload)),
+          EasyNotificationModel.fromJson(payload),
         );
       } else {
-        _lastNotiOpened = EasyNotificationModel.fromJson(jsonDecode(payload));
+        _lastNotiOpened = EasyNotificationModel.fromJson(payload);
       }
     }
     return payload;
